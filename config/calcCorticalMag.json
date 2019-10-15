@@ -1,0 +1,69 @@
+[
+	{
+		"flavor": "",
+		"hook": "",
+		"importance": "",
+		"localHookTemplate": "config/calcCorticalMagLocalHookTemplate.m",
+	        "printLocalHookOutput": "1",
+		"name": "calcCorticalMag",
+		"pathPlacement": "append",
+		"subfolder": ["code","demo"],
+		"toolboxRoot": "",
+		"type": "git",
+		"update": "",
+		"url": "https:\/\/github.com\/gkaguirrelab\/calcCorticalMag.git"
+	},
+	{
+		"flavor": "",
+		"hook": "",
+		"importance": "",
+		"localHookTemplate": "",
+		"name": "fw_sdk_matlab",
+		"pathPlacement": "append",
+		"subfolder": "",
+		"toolboxRoot": "",
+		"type": "include",
+		"update": "",
+		"url": ""
+	},
+	{
+		"flavor": "",
+		"hook": "",
+		"importance": "",
+		"localHookTemplate": "",
+		"name": "freesurferMatlab",
+		"pathPlacement": "append",
+		"subfolder": "matlab",
+		"toolboxRoot": "",
+		"type": "git",
+		"update": "",
+		"url": "https:\/\/github.com\/freesurfer\/freesurfer"
+	},
+	{
+		"flavor": "",
+		"hook": "",
+		"importance": "",
+		"localHookTemplate": "",
+		"name": "HCPpipelines",
+		"pathPlacement": "prepend",
+		"subfolder": "global",
+		"toolboxRoot": "",
+		"type": "git",
+		"update": "",
+		"url": "https:\/\/github.com\/Washington-University\/HCPpipelines.git"
+	},
+	{
+		"flavor": "",
+		"hook": "",
+		"importance": "",
+		"localHookTemplate": "",
+		"name": "gptoolbox",
+		"pathPlacement": "prepend",
+		"subfolder": "",
+		"toolboxRoot": "",
+		"type": "git",
+		"update": "",
+		"url": "https:\/\/github.com\/alecjacobson\/gptoolbox.git"
+	}
+]
+
