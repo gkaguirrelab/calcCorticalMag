@@ -22,7 +22,7 @@ p.addParameter('hemisphere','lh',@ischar);
 p.addParameter('whichSurface','inflated',@ischar); % pial, white, or sphere
 p.addParameter('stepSize',1,@isscalar);
 p.addParameter('angleSet',10:40:170,@isnumeric);
-p.addParameter('areaSet',[1 2 3],@isnumeric);
+p.addParameter('areaSet',[1],@isnumeric);
 
 
 
@@ -39,7 +39,16 @@ angleSet = p.Results.angleSet;
 surfName = fullfile(surfPath,[p.Results.hemisphere '.' p.Results.whichSurface]);
 [vert,face] = freesurfer_read_surf(surfName);
 
-% An anonymous function to return the distance map for a given vertex
+% An anonymous function to return the distance map for a given vertex. This
+% function uses the Geodesics in Heat algorithm:
+%
+%   Crane, Keenan, Clarisse Weischedel, and Max Wardetzky. "Geodesics in
+%   heat: A new approach to computing distance based on heat flow." ACM
+%   Transactions on Graphics (TOG) 32.5 (2013): 152.
+%
+% as implemented by Alec Jacobson in the gptoolbox:
+%   https://github.com/alecjacobson/gptoolbox/
+%
 getDistanceMap = @(idx) heat_geodesic(vert,face,idx);
 
 
@@ -78,8 +87,8 @@ for areaIdx = 1:length(areaSet)
         % Copy the start point into the initial position for this path
         positionIdx = 1;
         path(positionIdx,angleIdx,areaIdx) = startPoint;
-        pathErrors(positionIdx,angleIdx,areaIdx) = 0;
         pathPositions(positionIdx,angleIdx,areaIdx) = 0;
+        pathAngles(positionIdx,angleIdx,areaIdx) = nan;
         
         % Re-initialize the distanceMap with the start map
         distanceMap = distanceMapStart;
@@ -108,9 +117,9 @@ for areaIdx = 1:length(areaSet)
                 
                 % Store the values
                 path(positionIdx,angleIdx,areaIdx) = idx;
-                pathErrors(positionIdx,angleIdx,areaIdx) = fVal;
                 pathPositions(positionIdx,angleIdx,areaIdx) = ...
                     pathPositions(positionIdx-1,angleIdx,areaIdx) + distanceMap(idx);
+                pathAngles(positionIdx,angleIdx,areaIdx) = angleMap(idx);
                 
                 % Make a new distance map from this point
                 distanceMap = getDistanceMap(idx);
