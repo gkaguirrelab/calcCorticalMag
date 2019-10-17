@@ -69,7 +69,7 @@ function [vertices, faces] = freesurfer_read_surf(fname)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ver = '$Revision: 1.2 $ $Date: 2011/02/07 21:47:40 $';
-fprintf('FREESURFER_READ_SURF [v %s]\n',ver(11:15));
+%fprintf('FREESURFER_READ_SURF [v %s]\n',ver(11:15));
 
 if(nargin < 1)
     help freesurfer_read_surf;
@@ -90,7 +90,7 @@ if (fid < 0),
     error(str);
 end
 
-fprintf('...reading surface file: %s\n', fname);
+%fprintf('...reading surface file: %s\n', fname);
 tic;
 
 magic = freesurfer_fread3(fid);
@@ -98,21 +98,21 @@ magic = freesurfer_fread3(fid);
 if (magic == QUAD_FILE_MAGIC_NUMBER),
     Nvertices = freesurfer_fread3(fid);
     Nfaces = freesurfer_fread3(fid);
-    fprintf('...reading %d quad file vertices\n',Nvertices);
+    %fprintf('...reading %d quad file vertices\n',Nvertices);
     vertices = fread(fid, Nvertices*3, 'int16') ./ 100 ; 
     if (nargout > 1),
-        fprintf('...reading %d quad file faces (please wait)\n',Nfaces);
+        %fprintf('...reading %d quad file faces (please wait)\n',Nfaces);
         faces = zeros(Nfaces,4);
         for iface = 1:Nfaces,
             for n=1:4,
                 faces(iface,n) = freesurfer_fread3(fid) ;
             end
-            if(~rem(iface, 10000)), fprintf(' %7.0f',iface); end
-            if(~rem(iface,100000)), fprintf('\n'); end
+            %if(~rem(iface, 10000)), fprintf(' %7.0f',iface); end
+            %if(~rem(iface,100000)), fprintf('\n'); end
         end
     end
 elseif (magic == TRIANGLE_FILE_MAGIC_NUMBER),
-    fprintf('...reading triangle file\n');
+    %fprintf('...reading triangle file\n');
     tline = fgets(fid); % read creation date text line
     tline = fgets(fid); % read info text line
     
@@ -133,9 +133,9 @@ end
 vertices = reshape(vertices, 3, Nvertices)';
 fclose(fid);
 
-fprintf('...adding 1 to face indices for matlab compatibility.\n');
+%fprintf('...adding 1 to face indices for matlab compatibility.\n');
 faces = faces + 1;
 
-t=toc; fprintf('...done (%6.2f sec)\n\n',t);
+t=toc; %fprintf('...done (%6.2f sec)\n\n',t);
 
 return
